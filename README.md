@@ -7,13 +7,17 @@
 
 ## Documentación
    
-   # introduccion 
+   ## Introduccion 
      
+     Este  
      
+
+ ![Valores convertidos por el ADC transmitidos por UART](pyton_show_Graph.jpeg)  
+  Imagen.1 Grafica de voltaje expresada en el dominio del tiempo diseñada en Python.
 
 ## Implmentación
   
 ![Evidencia del circuito UART-PC](UART_PC.jpeg)  
- Imagen.1 Montaje usando el conversor srial USB a Serial TTL.
+ Imagen.2 Montaje usando el conversor srial USB a Serial TTL.
    
  
