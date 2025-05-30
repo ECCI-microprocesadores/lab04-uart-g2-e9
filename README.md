@@ -2,11 +2,18 @@
 # Lab04: Comunicación UART en PIC18F45K22
 
 ## Integrantes
-
+ 
+  Juan David Bernal Bernal
 
 ## Documentación
-
+   
+   # introduccion 
+     
+     
 
 ## Implmentación
-
-
+  
+![Evidencia del circuito UART-PC](UART_PC.jpeg)  
+ Imagen.1 Montaje usando el conversor srial USB a Serial TTL.
+   
+ 
