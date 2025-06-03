@@ -1,42 +1,31 @@
 import serial
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-import re
-from collections import deque
 
-SERIAL_PORT = 'COM4'     
+# Configuración del puerto
+SERIAL_PORT = 'COM4'
 BAUDRATE = 9600
 
-MAX_POINTS = 100
-
-ser = serial.Serial(SERIAL_PORT, BAUDRATE, timeout=1)
-
-voltages = deque(maxlen=MAX_POINTS)
-times = deque(maxlen=MAX_POINTS)
-time_counter = 0
-
-regex = re.compile(r"Voltaje:\s*([0-9.]+)")
-
-def update(frame):
-    global time_counter
-    line = ser.readline().decode('utf-8').strip()
+try:
+    # Abrir puerto serie
+    ser = serial.Serial(SERIAL_PORT, BAUDRATE, timeout=1)
+    print(f"Conectado al puerto {SERIAL_PORT}")
+    print("Presiona Ctrl+C para terminar")
+    print("-" * 40)
     
-    match = regex.search(line)
-    if match:
-        voltage = float(match.group(1))
-        voltages.append(voltage)
-        times.append(time_counter)
-        time_counter += 1
-
-        ax.clear()
-        ax.plot(times, voltages, color='blue')
-        ax.set_ylim(0, 5)
-        ax.set_title("Voltaje leído por UART")
-        ax.set_xlabel("Tiempo (s)")
-        ax.set_ylabel("Voltaje (V)")
-        ax.grid(True)
-
-fig, ax = plt.subplots()
-ani = animation.FuncAnimation(fig, update, interval=1000, cache_frame_data=False)
-plt.tight_layout()
-plt.show()
+    # Leer datos continuamente
+    while True:
+        if ser.in_waiting > 0:  # Si hay datos disponibles
+            data = ser.readline().decode('utf-8').strip()
+            if data:  # Si se recibió algo
+                print(data)  # Mostrar en terminal
+                
+except serial.SerialException as e:
+    print(f"Error al conectar al puerto {SERIAL_PORT}: {e}")
+    print("Verifica que el puerto esté disponible y no esté en uso")
+    
+except KeyboardInterrupt:
+    print("\nPrograma terminado")
+    
+finally:
+    if 'ser' in locals() and ser.is_open:
+        ser.close()
+        print("Puerto cerrado")
